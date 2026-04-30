@@ -1,0 +1,13 @@
+#!/bin/bash
+
+LLVM_SOURCE="las.ll"
+LLVM_SOURCE_DL="las-with-dl.ll"
+
+# The purpose of this is just to inject the correct datalayout to the IR, as the vectorizer relies on it.
+clang $LLVM_SOURCE -O0 -S -emit-llvm -o $LLVM_SOURCE_DL
+
+# This may not utilize maximally wide vectors.
+opt $LLVM_SOURCE_DL -passes=slp-vectorizer -S -o las-after-slp.ll
+
+# This allows usage of maximum width vectors supported by architecture.
+opt $LLVM_SOURCE_DL -mcpu=native -passes=slp-vectorizer -S -o las-after-slp-native.ll
