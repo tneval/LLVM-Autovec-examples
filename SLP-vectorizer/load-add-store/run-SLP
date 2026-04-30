@@ -11,3 +11,5 @@ opt $LLVM_SOURCE_DL -passes=slp-vectorizer -S -o las-after-slp.ll
 
 # This allows usage of maximum width vectors supported by architecture.
 opt $LLVM_SOURCE_DL -mcpu=native -passes=slp-vectorizer -S -o las-after-slp-native.ll
+
+llc las-after-slp-native.ll -O0 -o las.asm

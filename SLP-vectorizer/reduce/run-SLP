@@ -1,0 +1,10 @@
+#!/bin/bash
+
+LLVM_SOURCE="reduce.ll"
+LLVM_SOURCE_DL="reduce-with-dl.ll"
+
+clang $LLVM_SOURCE -O0 -S -emit-llvm -o $LLVM_SOURCE_DL
+
+opt $LLVM_SOURCE_DL -passes=slp-vectorizer -S -o reduce-after-SLP.ll
+
+llc reduce-after-SLP.ll -O0 -o reduce.asm
