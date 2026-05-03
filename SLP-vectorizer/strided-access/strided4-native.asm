@@ -11,12 +11,12 @@ strided:                                # @strided
 	vmovq	4(%rdi), %xmm0                  # xmm0 = mem[0],zero
 	vmovd	(%rdi), %xmm1                   # xmm1 = mem[0],zero,zero,zero
 	vpinsrd	$1, %ecx, %xmm1, %xmm1
-	vpaddd	%xmm1, %xmm0, %xmm1
+	vpaddd	%xmm1, %xmm0, %xmm0
+	vmovd	16(%rdi), %xmm1                 # xmm1 = mem[0],zero,zero,zero
+	vmovq	%xmm0, (%rsi)
 	vmovq	20(%rdi), %xmm0                 # xmm0 = mem[0],zero
-	vmovd	16(%rdi), %xmm2                 # xmm2 = mem[0],zero,zero,zero
-	vpinsrd	$1, %eax, %xmm2, %xmm2
-	vpaddd	%xmm2, %xmm0, %xmm0
-	vmovq	%xmm1, (%rsi)
+	vpinsrd	$1, %eax, %xmm1, %xmm1
+	vpaddd	%xmm1, %xmm0, %xmm0
 	vmovq	%xmm0, 8(%rsi)
 	retq
 .Lfunc_end0:

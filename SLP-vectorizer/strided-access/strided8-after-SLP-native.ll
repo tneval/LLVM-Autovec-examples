@@ -3,7 +3,7 @@ source_filename = "strided8.ll"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-define void @strided(ptr %in, ptr %out) #0 {
+define void @strided(ptr noalias %in, ptr noalias %out) #0 {
   %ap0 = getelementptr i32, ptr %in, i32 0
   %ap2 = getelementptr i32, ptr %in, i32 4
   %ap4 = getelementptr i32, ptr %in, i32 8
@@ -32,21 +32,21 @@ define void @strided(ptr %in, ptr %out) #0 {
   %2 = insertelement <2 x i32> poison, i32 %av0, i32 0
   %3 = insertelement <2 x i32> %2, i32 %bv1, i32 1
   %4 = add <2 x i32> %1, %3
+  store <2 x i32> %4, ptr %out0, align 4
   %5 = load <2 x i32>, ptr %bp2, align 4
   %6 = insertelement <2 x i32> poison, i32 %av2, i32 0
   %7 = insertelement <2 x i32> %6, i32 %bv3, i32 1
   %8 = add <2 x i32> %5, %7
+  store <2 x i32> %8, ptr %out2, align 4
   %9 = load <2 x i32>, ptr %bp4, align 4
   %10 = insertelement <2 x i32> poison, i32 %av4, i32 0
   %11 = insertelement <2 x i32> %10, i32 %bv5, i32 1
   %12 = add <2 x i32> %9, %11
+  store <2 x i32> %12, ptr %out4, align 4
   %13 = load <2 x i32>, ptr %bp6, align 4
   %14 = insertelement <2 x i32> poison, i32 %av6, i32 0
   %15 = insertelement <2 x i32> %14, i32 %bv7, i32 1
   %16 = add <2 x i32> %13, %15
-  store <2 x i32> %4, ptr %out0, align 4
-  store <2 x i32> %8, ptr %out2, align 4
-  store <2 x i32> %12, ptr %out4, align 4
   store <2 x i32> %16, ptr %out6, align 4
   ret void
 }

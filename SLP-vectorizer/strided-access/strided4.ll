@@ -1,7 +1,7 @@
 
 ; Assume why have %in = [a0, b0, a1, b1, a2, b2, ...]
 ; And we want to compute %out = a + b
-define void @strided(ptr %in, ptr %out)
+define void @strided(ptr noalias align 32 %in, ptr noalias align 32 %out)
 {
     ; Address calculations for %in
     %ap0 = getelementptr i32, ptr %in, i32 0

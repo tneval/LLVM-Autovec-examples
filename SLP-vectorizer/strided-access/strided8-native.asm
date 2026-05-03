@@ -13,22 +13,22 @@ strided:                                # @strided
 	vmovq	4(%rdi), %xmm0                  # xmm0 = mem[0],zero
 	vmovd	(%rdi), %xmm1                   # xmm1 = mem[0],zero,zero,zero
 	vpinsrd	$1, %r8d, %xmm1, %xmm1
-	vpaddd	%xmm1, %xmm0, %xmm3
+	vpaddd	%xmm1, %xmm0, %xmm0
+	vmovd	16(%rdi), %xmm3                 # xmm3 = mem[0],zero,zero,zero
+	vmovd	32(%rdi), %xmm2                 # xmm2 = mem[0],zero,zero,zero
+	vmovd	48(%rdi), %xmm1                 # xmm1 = mem[0],zero,zero,zero
+	vmovq	%xmm0, (%rsi)
 	vmovq	20(%rdi), %xmm0                 # xmm0 = mem[0],zero
-	vmovd	16(%rdi), %xmm1                 # xmm1 = mem[0],zero,zero,zero
-	vpinsrd	$1, %edx, %xmm1, %xmm1
-	vpaddd	%xmm1, %xmm0, %xmm2
+	vpinsrd	$1, %edx, %xmm3, %xmm3
+	vpaddd	%xmm3, %xmm0, %xmm0
+	vmovq	%xmm0, 8(%rsi)
 	vmovq	36(%rdi), %xmm0                 # xmm0 = mem[0],zero
-	vmovd	32(%rdi), %xmm1                 # xmm1 = mem[0],zero,zero,zero
-	vpinsrd	$1, %ecx, %xmm1, %xmm1
-	vpaddd	%xmm1, %xmm0, %xmm1
+	vpinsrd	$1, %ecx, %xmm2, %xmm2
+	vpaddd	%xmm2, %xmm0, %xmm0
+	vmovq	%xmm0, 16(%rsi)
 	vmovq	52(%rdi), %xmm0                 # xmm0 = mem[0],zero
-	vmovd	48(%rdi), %xmm4                 # xmm4 = mem[0],zero,zero,zero
-	vpinsrd	$1, %eax, %xmm4, %xmm4
-	vpaddd	%xmm4, %xmm0, %xmm0
-	vmovq	%xmm3, (%rsi)
-	vmovq	%xmm2, 8(%rsi)
-	vmovq	%xmm1, 16(%rsi)
+	vpinsrd	$1, %eax, %xmm1, %xmm1
+	vpaddd	%xmm1, %xmm0, %xmm0
 	vmovq	%xmm0, 24(%rsi)
 	retq
 .Lfunc_end0:

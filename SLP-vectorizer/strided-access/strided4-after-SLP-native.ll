@@ -3,7 +3,7 @@ source_filename = "strided4.ll"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-define void @strided(ptr %in, ptr %out) #0 {
+define void @strided(ptr noalias align 32 %in, ptr noalias align 32 %out) #0 {
   %ap0 = getelementptr i32, ptr %in, i32 0
   %ap2 = getelementptr i32, ptr %in, i32 4
   %bp0 = getelementptr i32, ptr %in, i32 1
@@ -20,11 +20,11 @@ define void @strided(ptr %in, ptr %out) #0 {
   %2 = insertelement <2 x i32> poison, i32 %av0, i32 0
   %3 = insertelement <2 x i32> %2, i32 %bv1, i32 1
   %4 = add <2 x i32> %1, %3
+  store <2 x i32> %4, ptr %out0, align 4
   %5 = load <2 x i32>, ptr %bp2, align 4
   %6 = insertelement <2 x i32> poison, i32 %av2, i32 0
   %7 = insertelement <2 x i32> %6, i32 %bv3, i32 1
   %8 = add <2 x i32> %5, %7
-  store <2 x i32> %4, ptr %out0, align 4
   store <2 x i32> %8, ptr %out2, align 4
   ret void
 }
