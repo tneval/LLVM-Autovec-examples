@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CASE="strided8"
+CASE="vectors"
 
 LLVM_SOURCE="${CASE}.ll"
 LLVM_SOURCE_DL="${CASE}-with-dl.ll"
@@ -44,6 +44,13 @@ $OPT $LLVM_SOURCE_DL -passes=slp-vectorizer -S -o $SLP_OUT_BASIC
 
 $LLC $SLP_OUT_BASIC -O0 -o $ASM_BASIC
 
+# Enable native optimizations
 $OPT $LLVM_SOURCE_DL -mcpu=native -passes=slp-vectorizer -S -o $SLP_OUT_NATIVE
 
 $LLC $SLP_OUT_NATIVE -O0 -o $ASM_NATIVE
+
+# Enable revectorization of vector data types. Only works for LLVM 19 onwards
+$OPT $LLVM_SOURCE_DL -mcpu=native -passes=slp-vectorizer -slp-revec -S -o revec.ll
+
+$LLC revec.ll -O0 -o revec.asm
+

@@ -1,5 +1,5 @@
 
-; Assume why have %in = [a0, b0, a1, b1, a2, b2, ...]
+; Assume we have %in = [a0, b0, a1, b1, a2, b2, ...]
 ; And we want to compute %out = a + b
 define void @strided(ptr noalias %in, ptr noalias %out)
 {
